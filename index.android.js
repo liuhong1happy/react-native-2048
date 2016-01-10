@@ -10,7 +10,7 @@ var {
 var ReactNative2048 = React.createClass({
   render: function() {
     return (
-      <Container />
+      <Container startTiles={2} size={4}/>
     );
   }
 });

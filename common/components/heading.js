@@ -26,11 +26,11 @@ var Heading = React.createClass({
                     <View style={styles.scores}>
                         <View style={styles.container}>
                             <Text style={styles.containerTitle}>SCORE</Text>
-                            <Text style={styles.containerValue}>3336</Text>
+                            <Text style={styles.containerValue}>{this.props.score}</Text>
                         </View>
                         <View style={styles.container}>
                             <Text style={styles.containerTitle}>BEST</Text>
-                            <Text style={styles.containerValue}>3336</Text>
+                            <Text style={styles.containerValue}>{this.props.best}</Text>
                         </View>
                     </View>
                 </View>)

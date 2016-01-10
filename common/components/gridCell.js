@@ -19,7 +19,8 @@ var styles = {
         width:(width-40-50)/4,
         height:(width-40-50)/4,
         marginHorizontal:5,
-        backgroundColor:"rgba(238, 228, 218, 0.35)"
+        backgroundColor:"rgba(238, 228, 218, 0.35)",
+        borderRadius:3
     }
 }
 
