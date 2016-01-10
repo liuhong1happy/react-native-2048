@@ -19,15 +19,15 @@ var Tile = React.createClass({
           isNew:            true
         };
     },
-    componentDidUpdate: function() {
-        this.setState({
-          previosuPosition: {
-            x: this.props.x,
-            y: this.props.y
-          },
-          isNew: false
-        });
-    },
+//    componentDidUpdate: function() {
+//        this.setState({
+//          previosuPosition: {
+//            x: this.props.x,
+//            y: this.props.y
+//          },
+//          isNew: false
+//        });
+//    },
     render:function(){
         var tileStyle = this.props.value<= 2048 ? styles['tile' + this.props.value] : styles["tilesuper"];
         var tilePositionStyle = {
@@ -79,7 +79,6 @@ var styles = StyleSheet.create({
     },
     "tile64":{
         backgroundColor:"#f75f3b",
-        color:"#f9f6f2"
     },
     "tile64Text":{
         color:"#f9f6f2"

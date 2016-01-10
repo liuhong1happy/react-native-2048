@@ -9,16 +9,14 @@ var {
 var {height, width} = Dimensions.get('window');
 
 var TileContainer = React.createClass({
-  getChildren: function() {
-    var children = [];
-    this.props.tiles.forEach(function(item) {
-      children.push(<Tile x={item.x} y={item.y} value={item.value} key={item.prog}/>);
-    });
-    return children;
-  },
     render:function(){
+        var children = this.props.tiles;
         return(<View style={styles.container}>
-                        {this.getChildren()}
+                        {
+                            children.map(function(item){
+                                return (<Tile x={item.x} y={item.y} value={item.value} key={item.prog}/>)
+                            })
+                        }
                 </View>)
     }
 })

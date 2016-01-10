@@ -3,7 +3,8 @@ var React = require('react-native');
 var {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    TouchableWithoutFeedback
 } = React;
 
 var AboveGame = React.createClass({
@@ -14,9 +15,11 @@ var AboveGame = React.createClass({
                             <Text style={styles.boldText}> 2048 tile!</Text> 
                         </Text>
                     </View>
-                    <View style={styles.newGameContainer}>
-                        <Text style={styles.newGame}>New Game</Text>
-                    </View>
+                    <TouchableWithoutFeedback onPress={this.props.onRestart}>
+                        <View style={styles.newGameContainer}>
+                            <Text style={styles.newGame}>New Game</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
                 </View>)
     }
 });

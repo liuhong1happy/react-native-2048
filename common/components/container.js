@@ -8,7 +8,8 @@ var {
   View,
   Text,
   Dimensions,
-  PanResponder
+  PanResponder,
+    Alert
 } = React;
 
 // Dimensions
@@ -67,11 +68,9 @@ var Container = React.createClass({
   },
    render:function(){
         var tiles = this.state.tiles?this.state.tiles:[];
-        var score = tiles.length;
-        var state = this.state.score;
         return (<View {...this._panResponder.panHandlers} style={styles.container} >
-                    <Heading score={score} best={this.state.best}></Heading> 
-                    <AboveGame></AboveGame>
+                    <Heading score={ this.state.score} best={this.state.best}></Heading> 
+                    <AboveGame onRestart={this.restart}></AboveGame>
                     <GameContainer size={this.props.size} tiles={this.state.tiles} won={this.state.won} over={this.state.over}></GameContainer>
                 </View>)
     },
@@ -131,7 +130,6 @@ var Container = React.createClass({
       this.won         = false;
       this.keepPlaying = false;
     }
-    
     this.setState({score: this.score, best: storageManager.getBestScore(), tiles: this.getRandomTiles(), over: this.over, won: this.won});
   },
   // Set up the initial tiles to start the game with
