@@ -93,6 +93,7 @@ var styles = {
         height:40,
         backgroundColor:"#8f7a66",
         borderRadius:3,
+        paddingHorizontal:15
     },
     tryAgain:{
         fontSize:24,
