@@ -12,22 +12,6 @@ var MARGIN_WIDTH = 5;
 var ITEM_WIDTH = (width-40-MARGIN_WIDTH*10)/4;
 
 var Tile = React.createClass({
-    getInitialState: function() {
-        return {
-          previousPosition: null,
-          mergedFrom:       null,
-          isNew:            true
-        };
-    },
-//    componentDidUpdate: function() {
-//        this.setState({
-//          previosuPosition: {
-//            x: this.props.x,
-//            y: this.props.y
-//          },
-//          isNew: false
-//        });
-//    },
     render:function(){
         var tileStyle = this.props.value<= 2048 ? styles['tile' + this.props.value] : styles["tilesuper"];
         var tilePositionStyle = {
@@ -49,7 +33,7 @@ var styles = StyleSheet.create({
         borderRadius:3
     },
     "tileText":{
-        fontSize: 45,
+        fontSize: 48,
         color:"#776E65",
         textAlign:"center"
     },
@@ -88,35 +72,35 @@ var styles = StyleSheet.create({
     },
     "tile128Text":{
         color:"#f9f6f2",
-        fontSize: 40
+        fontSize: 36
     },
     "tile256":{
         backgroundColor:"#edcc62",
     },
     "tile256Text":{
         color:"#f9f6f2",
-        fontSize: 40
+        fontSize: 36
     },
     "tile512":{
         backgroundColor:"#edc950",
     },
     "tile512Text":{
         color:"#f9f6f2",
-        fontSize: 40
+        fontSize: 36
     },
     "tile1024":{
         backgroundColor:"#edc53f",
     },
     "tile1024Text":{
         color:"#f9f6f2",
-        fontSize: 30
+        fontSize: 24
     },
     "tile2048":{
         backgroundColor:"#edc22e",
     },
     "tile2048Text":{
         color:"#f9f6f2",
-        fontSize: 30
+        fontSize: 24
     },
     "tilesuper":{
         backgroundColor:"#3c3a33",
