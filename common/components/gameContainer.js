@@ -13,9 +13,10 @@ var {height, width} = Dimensions.get('window');
 var GameContainer = React.createClass({
     render:function(){
         return(<View style={styles.container}>
-                        <GameMessage won={this.props.won} over={this.props.over}> </GameMessage>
                         <GridContainer></GridContainer>
                         <TileContainer tiles={this.props.tiles}></TileContainer>
+                        <GameMessage won={this.props.won} over={this.props.over} onKeepGoing={this.props.onKeepGoing} onTryAagin={this.props.onTryAagin}> 
+                        </GameMessage>
                </View>)
     }
 })

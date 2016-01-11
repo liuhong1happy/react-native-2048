@@ -71,7 +71,9 @@ var Container = React.createClass({
         return (<View {...this._panResponder.panHandlers} style={styles.container} >
                     <Heading score={ this.state.score} best={this.state.best}></Heading> 
                     <AboveGame onRestart={this.restart}></AboveGame>
-                    <GameContainer size={this.props.size} tiles={this.state.tiles} won={this.state.won} over={this.state.over}></GameContainer>
+                    <GameContainer size={this.props.size} tiles={this.state.tiles} won={this.state.won} over={this.state.over}
+                            onKeepGoing={this.keepGoing} onTryAagin={this.restart}>
+                    </GameContainer>
                 </View>)
     },
    getRandomTiles: function() {
@@ -82,7 +84,7 @@ var Container = React.createClass({
     return ret;
   },
    getRandomTile: function() {
-    var value = Math.random() < 0.9 ? 2 : 4;
+    var value = Math.random() < 0.9 ? 128 : 512;
     var pos = this.grid.randomAvailableCell();
     var tile = new Tile(pos, value);
     this.grid.insertTile(tile);
@@ -96,15 +98,15 @@ var Container = React.createClass({
    continueGame: function() {
     this.won = false;
     this.over = false;
-    // this.setState({won: this.won, over: this.over});
+    this.setState({won: this.won, over: this.over});
   },
    restart: function () {
-    storageManager.clearGameState();
-    this.continueGame(); // Clear the game won/lost message
-    this.setup();
+        storageManager.clearGameState();
+        this.continueGame(); // Clear the game won/lost message
+        this.setup();
   },
    // Keep playing after winning (allows going over 2048)
-   keepPlaying: function () {
+   keepGoing: function () {
     this.keepPlaying = true;
     this.continueGame(); // Clear the game won/lost message
   },
@@ -143,7 +145,7 @@ var Container = React.createClass({
     var cellsAvailable = this.grid.cellsAvailable();
     
     if (cellsAvailable) {
-      var value = Math.random() < 0.9 ? 2 : 4;
+      var value = Math.random() < 0.9 ? 128 : 512;
       var tile = new Tile(this.grid.randomAvailableCell(), value);
 
       this.grid.insertTile(tile);

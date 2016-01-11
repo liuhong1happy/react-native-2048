@@ -21,8 +21,11 @@ var Tile = React.createClass({
             height:ITEM_WIDTH
         }
         var tileTextStyle = this.props.value<= 2048 ? styles['tile' + this.props.value+"Text"] : styles["tilesuperText"];
+        var tileTextLineStyle = {
+            lineHeight:parseInt(ITEM_WIDTH)
+        }
         return (<View style={[ styles.tile,tileStyle,tilePositionStyle]}>
-                        <Text style={[ styles.tileText,tileTextStyle]}>{ this.props.value }</Text>
+                        <Text style={[ styles.tileText,tileTextStyle,tileTextLineStyle]}>{ this.props.value }</Text>
             </View>)
     }
 })
@@ -35,7 +38,7 @@ var styles = StyleSheet.create({
     "tileText":{
         fontSize: 48,
         color:"#776E65",
-        textAlign:"center"
+        textAlign:"center",
     },
     "tile2":{
         backgroundColor:"#eee4da",
@@ -72,38 +75,45 @@ var styles = StyleSheet.create({
     },
     "tile128Text":{
         color:"#f9f6f2",
-        fontSize: 36
+        fontSize: 36,
+        marginTop:8
     },
     "tile256":{
         backgroundColor:"#edcc62",
     },
     "tile256Text":{
         color:"#f9f6f2",
-        fontSize: 36
+        fontSize: 36,
+        marginTop:8
     },
     "tile512":{
         backgroundColor:"#edc950",
     },
     "tile512Text":{
         color:"#f9f6f2",
-        fontSize: 36
+        fontSize: 36,
+        marginTop:8
     },
     "tile1024":{
         backgroundColor:"#edc53f",
     },
     "tile1024Text":{
         color:"#f9f6f2",
-        fontSize: 24
+        fontSize: 24,
+        marginTop:14
     },
     "tile2048":{
         backgroundColor:"#edc22e",
     },
     "tile2048Text":{
         color:"#f9f6f2",
-        fontSize: 24
+        fontSize: 24,
+        marginTop:14
     },
     "tilesuper":{
         backgroundColor:"#3c3a33",
+        fontSize: 12,
+        marginTop:24
     },
     "tilesuperText":{
         color:"#f9f6f2"
