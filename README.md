@@ -4,11 +4,23 @@ A React Native clone of [2048](https://github.com/claudiopro/2048-react) by [cla
 
 ## Developing
 
+####　Android
+
 ```bash
 git clone git@github.com:ReactLover/react-native-2048.git
 cd react-native-2048
+npm install
 react-native run-android
 react-native start
+```
+
+####　IOS
+
+```bash
+git clone git@github.com:ReactLover/react-native-2048.git
+cd react-native-2048
+npm install
+# open xcode and run
 ```
 
 ## Screenshot
