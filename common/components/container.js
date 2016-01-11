@@ -119,10 +119,10 @@ var Container = React.createClass({
     // Reload the game from a previous game if present
     if (previousState) {
       this.grid        = new Grid(previousState.grid.size, previousState.grid.cells); // Reload grid
-      this.score       = previousState.score;
-      this.over        = previousState.over;
-      this.won         = previousState.won;
-      this.keepPlaying = previousState.keepPlaying;
+      this.score       = parseInt(previousState.score);
+      this.over        = (previousState.over== true ||　previousState.over=='true');
+      this.won         = (previousState.won== true ||　previousState.won=='true');
+      this.keepPlaying = (previousState.keepPlaying== true ||　previousState.keepPlaying=='true');
     } else {
       this.grid        = new Grid(this.props.size);
       this.score       = 0;
@@ -130,7 +130,7 @@ var Container = React.createClass({
       this.won         = false;
       this.keepPlaying = false;
     }
-    this.setState({score: this.score, best: storageManager.getBestScore(), tiles: this.getRandomTiles(), over: this.over, won: this.won});
+    this.setState({score: this.score, best: parseInt(storageManager.getBestScore()), tiles: this.getRandomTiles(), over: this.over, won: this.won});
   },
   // Set up the initial tiles to start the game with
   addStartTiles: function () {
@@ -180,7 +180,7 @@ var Container = React.createClass({
       });
     });
       
-    var bestScore = storageManager.getBestScore();
+    var bestScore = parseInt(storageManager.getBestScore());
     if (bestScore < this.score) {
       storageManager.setBestScore(this.score);   
       this.setState({score: this.score, best: this.score, tiles: tiles, won: this.won, over:this.over});
