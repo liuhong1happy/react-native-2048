@@ -84,7 +84,7 @@ var Container = React.createClass({
     return ret;
   },
    getRandomTile: function() {
-    var value = Math.random() < 0.9 ? 128 : 512;
+    var value = Math.random() < 0.9 ? 2 : 4;
     var pos = this.grid.randomAvailableCell();
     var tile = new Tile(pos, value);
     this.grid.insertTile(tile);
@@ -145,7 +145,7 @@ var Container = React.createClass({
     var cellsAvailable = this.grid.cellsAvailable();
     
     if (cellsAvailable) {
-      var value = Math.random() < 0.9 ? 128 : 512;
+      var value = Math.random() < 0.9 ? 2 : 4;
       var tile = new Tile(this.grid.randomAvailableCell(), value);
 
       this.grid.insertTile(tile);
