@@ -23,6 +23,14 @@ npm install
 # open xcode and run
 ```
 
+## Release
+
+####　Android
+
+```bash
+npm run release
+```
+
 ## Screenshot
 
 ![](/common/images/Screenshot.png)
