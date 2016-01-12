@@ -43,4 +43,4 @@ Changes and improvements are more than welcome! Feel free to fork and open a pul
 
 [MIT](http://opensource.org/licenses/MIT)
 
-Copyright (c) Claudio Procida 2015
+Copyright (c) Holly Liu 2015
