@@ -25,6 +25,9 @@ var Tile = require('../utils/tile');
 var storageManager = new StorageManager();
 
 var Container = React.createClass({
+    getInitialState:function(){
+        return { tiles:[], score:0,over:false,win:false,keepPlaying:false,grid:new Grid(this.props.size)}
+    },
     componentWillMount: function() {
         this.setup();
         this._panResponder = PanResponder.create({
@@ -114,25 +117,29 @@ var Container = React.createClass({
    isGameTerminated: function () {
     return this.over || (this.won && !this.keepPlaying);
   },
+  setGameState: function(previousState){
+        // Reload the game from a previous game if present
+        if (previousState) {
+          this.grid        = new Grid(previousState.grid.size, previousState.grid.cells); // Reload grid
+          this.score       = parseInt(previousState.score);
+          this.over        = (previousState.over== true ||　previousState.over=='true');
+          this.won         = (previousState.won== true ||　previousState.won=='true');
+          this.keepPlaying = (previousState.keepPlaying== true ||　previousState.keepPlaying=='true');
+        } else {
+          this.grid        = new Grid(this.props.size);
+          this.score       = 0;
+          this.over        = false;
+          this.won         = false;
+          this.keepPlaying = false;
+        }
+        var _self =  this;
+        storageManager.getBestScore(function(bestScore){
+            _self.setState({score: _self.score, best: bestScore, tiles: _self.getRandomTiles(), over: _self.over, won: _self.won});
+        })
+  },
     // Set up the game
   setup: function () {
-    var previousState = storageManager.getGameState();
-
-    // Reload the game from a previous game if present
-    if (previousState) {
-      this.grid        = new Grid(previousState.grid.size, previousState.grid.cells); // Reload grid
-      this.score       = parseInt(previousState.score);
-      this.over        = (previousState.over== true ||　previousState.over=='true');
-      this.won         = (previousState.won== true ||　previousState.won=='true');
-      this.keepPlaying = (previousState.keepPlaying== true ||　previousState.keepPlaying=='true');
-    } else {
-      this.grid        = new Grid(this.props.size);
-      this.score       = 0;
-      this.over        = false;
-      this.won         = false;
-      this.keepPlaying = false;
-    }
-    this.setState({score: this.score, best: parseInt(storageManager.getBestScore()), tiles: this.getRandomTiles(), over: this.over, won: this.won});
+    storageManager.getGameState(this.setGameState);
   },
   // Set up the initial tiles to start the game with
   addStartTiles: function () {
@@ -181,15 +188,16 @@ var Container = React.createClass({
         }
       });
     });
-      
-    var bestScore = parseInt(storageManager.getBestScore());
-    if (bestScore < this.score) {
-      storageManager.setBestScore(this.score);   
-      this.setState({score: this.score, best: this.score, tiles: tiles, won: this.won, over:this.over});
-    }
-    else {
-      this.setState({score: this.score, tiles: tiles, won: this.won, over:this.over});
-    }
+    var _self = this;
+    storageManager.getBestScore(function(bestScore){
+        if (bestScore < _self.score) {
+          storageManager.setBestScore(_self.score);   
+          _self.setState({score: _self.score, best: _self.score, tiles: tiles, won: _self.won, over:_self.over});
+        }
+        else {
+          _self.setState({score: _self.score, tiles: tiles, won: _self.won, over:_self.over});
+        }
+    });
   },
   // Represent the current game as an object
   serialize: function () {
