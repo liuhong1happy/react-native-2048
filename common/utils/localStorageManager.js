@@ -43,7 +43,7 @@ LocalStorageManager.prototype.getBestScore = function (callback) {
   this.getItem({
       key:this.bestScoreKey,
       success:function(result){
-          callback(result?parseInt(result):0);
+          callback(result && !isNaN(result)?parseInt(result):0);
       },
       error:function(error){
           console.log(error);
