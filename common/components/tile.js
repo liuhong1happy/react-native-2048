@@ -7,6 +7,7 @@ var {
 } = React;
 
 var {height, width} = Dimensions.get('window');
+var isMinWin = width <= 320;
 
 var MARGIN_WIDTH = 5;
 var ITEM_WIDTH = (width-40-MARGIN_WIDTH*10)/4;
@@ -33,7 +34,7 @@ var styles = StyleSheet.create({
         borderRadius:3
     },
     "tileText":{
-        fontSize: 48,
+        fontSize: isMinWin?36:48,
         color:"#776E65",
         textAlign:"center",
         marginTop:5,
@@ -77,7 +78,7 @@ var styles = StyleSheet.create({
     },
     "tile128Text":{
         color:"#f9f6f2",
-        fontSize: 36,
+        fontSize: isMinWin?27:36,
         marginTop:8
     },
     "tile256":{
@@ -85,7 +86,7 @@ var styles = StyleSheet.create({
     },
     "tile256Text":{
         color:"#f9f6f2",
-        fontSize: 36,
+        fontSize: isMinWin?27:36,
         marginTop:8
     },
     "tile512":{
@@ -93,7 +94,7 @@ var styles = StyleSheet.create({
     },
     "tile512Text":{
         color:"#f9f6f2",
-        fontSize: 36,
+        fontSize: isMinWin?27:36,
         marginTop:8
     },
     "tile1024":{
@@ -101,7 +102,7 @@ var styles = StyleSheet.create({
     },
     "tile1024Text":{
         color:"#f9f6f2",
-        fontSize: 24,
+        fontSize: isMinWin?18:24,
         marginTop:14
     },
     "tile2048":{
@@ -109,12 +110,12 @@ var styles = StyleSheet.create({
     },
     "tile2048Text":{
         color:"#f9f6f2",
-        fontSize: 24,
+        fontSize:  isMinWin?18:24,
         marginTop:14
     },
     "tilesuper":{
         backgroundColor:"#3c3a33",
-        fontSize: 12,
+        fontSize: isMinWin?9:12,
         marginTop:24
     },
     "tilesuperText":{

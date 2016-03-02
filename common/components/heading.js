@@ -19,6 +19,7 @@ var {
 } = React;
     
 var {height, width} = Dimensions.get('window');
+var isMinWin = width <= 320;
 var Heading = React.createClass({
     render:function(){
         return(<View style={styles.heading}>
@@ -39,12 +40,13 @@ var Heading = React.createClass({
 
 var styles = StyleSheet.create({
     heading:{
-        height:80,
-        marginTop:40,
-        flexDirection: 'row'
+        height:isMinWin?70:80,
+        marginTop:isMinWin?50:40,
+        
+        flexDirection: 'row',
     },
     headingTitle:{
-        fontSize:48,
+        fontSize:isMinWin?36:48,
         color:"#776E65",
         fontWeight:"bold"
     },
@@ -70,12 +72,12 @@ var styles = StyleSheet.create({
         color:"#eee4da",
         textAlign:"center",
         fontWeight:"bold",
-        fontSize:12
+        fontSize:isMinWin?9:12
     },
     containerValue:{
         color:"#fff",
         textAlign:"center",
-        fontSize:24,
+        fontSize:isMinWin?18:24,
         fontWeight:"bold"
     }
 })

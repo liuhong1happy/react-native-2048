@@ -4,8 +4,11 @@ var {
     View,
     Text,
     StyleSheet,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    Dimensions
 } = React;
+var {height, width} = Dimensions.get('window');
+var isMinWin = width <= 320;
 
 var AboveGame = React.createClass({
     render:function(){
@@ -28,7 +31,8 @@ var styles = StyleSheet.create({
     container:{
         flexDirection: 'row',
         flexWrap:"nowrap",
-        marginTop:5
+        marginTop:5,
+        marginBottom:isMinWin?15:0
     },
     textContainer:{
         flex:1,
@@ -36,8 +40,8 @@ var styles = StyleSheet.create({
     },
     text:{
         color:"#776E65",
-        fontSize:16,
-        lineHeight:26
+        fontSize:isMinWin?12:16,
+        lineHeight:isMinWin?18:26
     },
     boldText:{
        fontWeight:"bold"  
@@ -50,7 +54,7 @@ var styles = StyleSheet.create({
     },
     newGame:{
         color:"#fff",
-        fontSize:18,
+        fontSize:isMinWin?14:18,
     }
 })
         
