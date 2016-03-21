@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "release":"cd android && ./gradlew assembleRelease && ./gradlew installRelease"
+    "release": "cd android && ./gradlew assembleRelease && ./gradlew installRelease"
   },
   "dependencies": {
-    "react-native": "^0.21.0"
+    "react": "^0.14.7",
+    "react-native": "^0.22.0"
   }
 }
