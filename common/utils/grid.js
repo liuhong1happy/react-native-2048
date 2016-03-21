@@ -1,7 +1,6 @@
+import Tile from './tile'
 
-var Tile = require('./tile');
-
-var Grid = function (size, previousState) {
+const Grid = function (size, previousState) {
   this.size = size;
   this.cells = previousState ? this.fromState(previousState) : this.empty();
 }
@@ -131,4 +130,4 @@ Grid.prototype.serialize = function () {
   };
 };
 
-module.exports = Grid;
+export default Grid

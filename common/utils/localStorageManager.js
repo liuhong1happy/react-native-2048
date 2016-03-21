@@ -1,12 +1,13 @@
-var React = require('react-native');
-var {
-  AsyncStorage
-} = React;
+import React from 'react-native'
+
+const {
+  AsyncStorage,
+} = React
 
 var LocalStorageManager = function() {
-    this.bestScoreKey = "bestScore";
-    this.gameStateKey = "gameState";
-    this.storage = AsyncStorage;
+  this.bestScoreKey = "bestScore"
+  this.gameStateKey = "gameState"
+  this.storage = AsyncStorage
 }
 
 LocalStorageManager.prototype.getItem = function(options){
@@ -53,7 +54,7 @@ LocalStorageManager.prototype.getBestScore = function (callback) {
 LocalStorageManager.prototype.setBestScore = function (score,callback) {
   var callback = callback?callback:function(){};
   this.setItem({
-      key:this.bestScoreKey, 
+      key:this.bestScoreKey,
       value:score.toString(),
       success:callback,
       error:function(error){
@@ -80,7 +81,7 @@ LocalStorageManager.prototype.setGameState = function (gameState,callback) {
   var callback = callback?callback:function(){};
   var json = gameState?JSON.stringify(gameState):null;
   this.setItem({
-      key:this.bestScoreKey, 
+      key:this.bestScoreKey,
       value:json,
       success:callback,
       error:function(error){
@@ -99,4 +100,4 @@ LocalStorageManager.prototype.clearGameState = function (callback) {
   });
 };
 
-module.exports = LocalStorageManager;
+export default LocalStorageManager

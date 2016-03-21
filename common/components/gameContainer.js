@@ -1,34 +1,39 @@
-var React = require('react-native');
-var GameMessage  =require('./gameMessage');
-var GridContainer = require('./gridContainer');
-var TileContainer = require('./tileContainer');
+import React from 'react-native'
 
-var {
-    View,
-    Dimensions
-} = React;
+import GameMessage from './gameMessage'
+import GridContainer from './gridContainer'
+import TileContainer from './tileContainer'
 
-var {height, width} = Dimensions.get('window');
+const {
+  View,
+  Dimensions,
+} = React
 
-var GameContainer = React.createClass({
-    render:function(){
-        return(<View style={styles.container}>
-                        <GridContainer></GridContainer>
-                        <TileContainer tiles={this.props.tiles}></TileContainer>
-                        <GameMessage won={this.props.won} over={this.props.over} onKeepGoing={this.props.onKeepGoing} onTryAagin={this.props.onTryAagin}> 
-                        </GameMessage>
-               </View>)
-    }
-})
-        
-var styles = {
-    container:{
-        width:width-40,
-        height:width-40,
-        backgroundColor:"#bbada0",
-        borderRadius:6,
-        marginTop:25
-    }
+const {height, width} = Dimensions.get('window')
+
+const styles = {
+  container: {
+    width: width - 40,
+    height: width - 40,
+    backgroundColor: '#bbada0',
+    borderRadius: 6,
+    marginTop: 25,
+  }
 }
 
-module.exports = GameContainer;
+const GameContainer = (props) => {
+  return (
+    <View style={styles.container}>
+      <GridContainer />
+      <TileContainer tiles={props.tiles} />
+      <GameMessage
+        won={props.won}
+        over={props.over}
+        onKeepGoing={props.onKeepGoing}
+        onTryAagin={props.onTryAagin}
+      />
+    </View>
+  )
+}
+
+export default GameContainer

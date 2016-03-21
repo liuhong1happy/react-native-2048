@@ -1,31 +1,32 @@
-var React = require('react-native');
-var GridCell = require('./gridCell');
+import React from 'react-native'
 
-var {
-    View,
-    Text,
-    Dimensions
-} = React;
+import GridCell from './gridCell'
 
-var {height, width} = Dimensions.get('window');
+const {
+  View,
+  Text,
+  Dimensions,
+} = React
 
-var GridRow = React.createClass({
-    render:function(){
-        return(<View style={styles.container}>
-                    <GridCell></GridCell>
-                    <GridCell></GridCell>
-                    <GridCell></GridCell>
-                    <GridCell></GridCell>
-                </View>)
-    }
-})
-        
-var styles = {
-    container:{
-        height:(width-40-50)/4,
-        marginVertical:5,
-        flexDirection:"row"
-    }
+const {height, width} = Dimensions.get('window')
+
+const styles = {
+  container: {
+    height: (width-40-50)/4,
+    marginVertical: 5,
+    flexDirection: 'row',
+  }
 }
 
-module.exports = GridRow;
+const GridRow = () => {
+  return (
+    <View style={styles.container}>
+      <GridCell />
+      <GridCell />
+      <GridCell />
+      <GridCell />
+    </View>
+  )
+}
+
+export default GridRow

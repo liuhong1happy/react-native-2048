@@ -1,18 +1,9 @@
-'use strict';
+import React, {AppRegistry} from 'react-native'
 
-var React = require('react-native');
-var Container = require('./common/components/container');
+import Container from './common/components/container'
 
-var {
-    AppRegistry
-} = React;
+cont ReactNative2048 = () => {
+  return <Container startTiles={2} size={4} />
+}
 
-var ReactNative2048 = React.createClass({
-  render: function() {
-    return (
-      <Container startTiles={2} size={4}/>
-    );
-  }
-});
-
-AppRegistry.registerComponent('ReactNative2048', () => ReactNative2048);
+AppRegistry.registerComponent('ReactNative2048', () => ReactNative2048)

@@ -1,92 +1,102 @@
-var React = require('react-native');
+import React from 'react-native'
+
+// Modules
+// import TouchManager from '../utils/touchManager'
+import StorageManager from '../utils/localStorageManager'
+import Grid from '../utils/grid'
+import Tile from '../utils/tile'
+
 // Views
-var Heading = require('./heading');
-var AboveGame = require('./aboveGame');
-var GameContainer = require('./gameContainer');
-var {
+import Heading from './heading'
+import AboveGame from './aboveGame'
+import GameContainer from './gameContainer'
+
+const {
   StyleSheet,
   View,
   Text,
   Dimensions,
   PanResponder,
-    Alert
-} = React;
+  Alert,
+} = React
 
 // Dimensions
-var {height, width} = Dimensions.get('window');
-
-// Modules
-//var TouchManager = require('../utils/touchManager');
-var StorageManager = require('../utils/localStorageManager');
-var Grid = require('../utils/grid');
-var Tile = require('../utils/tile');
+const {height, width} = Dimensions.get('window')
 
 // StorageManager
-var storageManager = new StorageManager();
+const storageManager = new StorageManager()
 
-var Container = React.createClass({
-    getInitialState:function(){
-        return { tiles:[], score:0,over:false,win:false,keepPlaying:false,grid:new Grid(this.props.size)}
-    },
-    componentWillMount: function() {
-        this.setup();
-        this._panResponder = PanResponder.create({
-          onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-          onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
-          onPanResponderGrant: this._handlePanResponderGrant,
-          onPanResponderMove: this._handlePanResponderMove,
-          onPanResponderRelease: this._handlePanResponderEnd,
+const styles = StyleSheet.create({
+  container: {
+    width,
+    height,
+    backgroundColor: '#faf8ef',
+    paddingHorizontal: 20,
+  }
+})
+
+const Container = React.createClass({
+  getInitialState() {
+    return { tiles:[], score:0,over:false,win:false,keepPlaying:false,grid:new Grid(this.props.size)}
+  },
+  componentWillMount() {
+    this.setup()
+    this._panResponder = PanResponder.create({
+      onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
+      onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
+      onPanResponderGrant: this._handlePanResponderGrant,
+      onPanResponderMove: this._handlePanResponderMove,
+      onPanResponderRelease: this._handlePanResponderEnd,
 //          onPanResponderTerminate: this._handlePanResponderEnd,
-        });
-        this.moving = false;
-    },
-   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
-    return true;
+    })
+    this.moving = false
   },
-   _handleMoveShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
-    return true;
+  _handleStartShouldSetPanResponder(e: Object, gestureState: Object): boolean {
+    return true
   },
-   _handlePanResponderGrant: function(e: Object, gestureState: Object) {
-      if(this.moving==false){
-          this.moving = true;
+  _handleMoveShouldSetPanResponder(e: Object, gestureState: Object): boolean {
+    return true
+  },
+  _handlePanResponderGrant(e: Object, gestureState: Object) {
+    if (this.moving == false) {
+        this.moving = true
+    }
+  },
+  _handlePanResponderMove(e: Object, gestureState: Object) {
+  },
+  _handlePanResponderEnd(e: Object, gestureState: Object) {
+    if (this.moving) {
+      this.moving = false
+
+      var dx = gestureState.dx;
+      var dy = gestureState.dy;
+      var absDx = dx>0?dx:-dx;
+      var absDy = dy>0?dy:-dy;
+      var canMove = absDx>absDy?absDx-absDy>10:absDx-absDy<-10;
+      if (canMove) {
+        // (right : left) : (down : up)
+        this.move(absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
       }
+    }
   },
-   _handlePanResponderMove: function(e: Object, gestureState: Object) {
-      
+  render() {
+    var tiles = this.state.tiles?this.state.tiles:[];
+    return (<View {...this._panResponder.panHandlers} style={styles.container} >
+                <Heading score={ this.state.score} best={this.state.best}></Heading>
+                <AboveGame onRestart={this.restart}></AboveGame>
+                <GameContainer size={this.props.size} tiles={this.state.tiles} won={this.state.won} over={this.state.over}
+                        onKeepGoing={this.keepGoing} onTryAagin={this.restart}>
+                </GameContainer>
+            </View>)
   },
-   _handlePanResponderEnd: function(e: Object, gestureState: Object) {
-        if(this.moving){
-            this.moving = false;
-            
-            var dx = gestureState.dx;
-            var dy = gestureState.dy;
-            var absDx = dx>0?dx:-dx;
-            var absDy = dy>0?dy:-dy;
-            var canMove = absDx>absDy?absDx-absDy>10:absDx-absDy<-10;
-            if (canMove) {
-                  // (right : left) : (down : up)
-                  this.move(absDx > absDy ? (dx > 0 ? 1 : 3) : (dy > 0 ? 2 : 0));
-            }
-        }
-  },
-   render:function(){
-        var tiles = this.state.tiles?this.state.tiles:[];
-        return (<View {...this._panResponder.panHandlers} style={styles.container} >
-                    <Heading score={ this.state.score} best={this.state.best}></Heading> 
-                    <AboveGame onRestart={this.restart}></AboveGame>
-                    <GameContainer size={this.props.size} tiles={this.state.tiles} won={this.state.won} over={this.state.over}
-                            onKeepGoing={this.keepGoing} onTryAagin={this.restart}>
-                    </GameContainer>
-                </View>)
-    },
-   getRandomTiles: function() {
+  getRandomTiles() {
     var ret = [];
     for (var i = 0; i < this.props.startTiles; i++) {
       ret.push(this.getRandomTile())
     }
     return ret;
   },
-   getRandomTile: function() {
+  getRandomTile() {
     var value = Math.random() < 0.9 ? 2 : 4;
     var pos = this.grid.randomAvailableCell();
     var tile = new Tile(pos, value);
@@ -98,73 +108,73 @@ var Container = React.createClass({
       prog: tile.prog
     };
   },
-   continueGame: function() {
+  continueGame() {
     this.won = false;
     this.over = false;
     this.setState({won: this.won, over: this.over});
   },
-   restart: function () {
-        storageManager.clearGameState();
-        this.continueGame(); // Clear the game won/lost message
-        this.setup();
+  restart() {
+    storageManager.clearGameState()
+    this.continueGame()  // Clear the game won/lost message
+    this.setup()
   },
-   // Keep playing after winning (allows going over 2048)
-   keepGoing: function () {
-    this.keepPlaying = true;
-    this.continueGame(); // Clear the game won/lost message
+  // Keep playing after winning (allows going over 2048)
+  keepGoing() {
+    this.keepPlaying = true
+    this.continueGame()  // Clear the game won/lost message
   },
    // Return true if the game is lost, or has won and the user hasn't kept playing
-   isGameTerminated: function () {
-    return this.over || (this.won && !this.keepPlaying);
+  isGameTerminated() {
+    return this.over || (this.won && !this.keepPlaying)
   },
-  setGameState: function(previousState){
-        // Reload the game from a previous game if present
-        if (previousState) {
-          this.grid        = new Grid(previousState.grid.size, previousState.grid.cells); // Reload grid
-          this.score       = parseInt(previousState.score);
-          this.over        = (previousState.over== true ||　previousState.over=='true');
-          this.won         = (previousState.won== true ||　previousState.won=='true');
-          this.keepPlaying = (previousState.keepPlaying== true ||　previousState.keepPlaying=='true');
-        } else {
-          this.grid        = new Grid(this.props.size);
-          this.score       = 0;
-          this.over        = false;
-          this.won         = false;
-          this.keepPlaying = false;
-        }
-        var _self =  this;
-        storageManager.getBestScore(function(bestScore){
-            _self.setState({score: _self.score, best: bestScore, tiles: _self.getRandomTiles(), over: _self.over, won: _self.won});
-        })
+  setGameState(previousState) {
+    // Reload the game from a previous game if present
+    if (previousState) {
+      this.grid        = new Grid(previousState.grid.size, previousState.grid.cells); // Reload grid
+      this.score       = parseInt(previousState.score);
+      this.over        = (previousState.over== true ||　previousState.over=='true');
+      this.won         = (previousState.won== true ||　previousState.won=='true');
+      this.keepPlaying = (previousState.keepPlaying== true ||　previousState.keepPlaying=='true');
+    } else {
+      this.grid        = new Grid(this.props.size);
+      this.score       = 0;
+      this.over        = false;
+      this.won         = false;
+      this.keepPlaying = false;
+    }
+    var _self =  this;
+    storageManager.getBestScore(function(bestScore){
+        _self.setState({score: _self.score, best: bestScore, tiles: _self.getRandomTiles(), over: _self.over, won: _self.won});
+    })
   },
-    // Set up the game
-  setup: function () {
-    storageManager.getGameState(this.setGameState);
+  // Set up the game
+  setup() {
+    storageManager.getGameState(this.setGameState)
   },
   // Set up the initial tiles to start the game with
-  addStartTiles: function () {
+  addStartTiles() {
     for (var i = 0; i < this.startTiles; i++) {
-      this.addRandomTile();
+      this.addRandomTile()
     }
   },
   // Adds a tile in a random position
-  addRandomTile: function () {
-    var cellsAvailable = this.grid.cellsAvailable();
-    
+  addRandomTile() {
+    var cellsAvailable = this.grid.cellsAvailable()
+
     if (cellsAvailable) {
       var value = Math.random() < 0.9 ? 2 : 4;
-      var tile = new Tile(this.grid.randomAvailableCell(), value);
+      var tile = new Tile(this.grid.randomAvailableCell(), value)
 
-      this.grid.insertTile(tile);
+      this.grid.insertTile(tile)
     }
   },
   // Sends the updated grid to the actuator
-  actuate: function () {
+  actuate() {
     // Clear the state when the game is over (game over only, not win)
     if (this.over) {
-      storageManager.clearGameState();
+      storageManager.clearGameState()
     } else {
-      storageManager.setGameState(this.serialize());
+      storageManager.setGameState(this.serialize())
     }
 
     // this.actuator.actuate(this.grid, {
@@ -175,7 +185,7 @@ var Container = React.createClass({
     //   terminated: this.isGameTerminated()
     // });
 
-    var tiles = [];
+    var tiles = []
     this.grid.cells.forEach(function (column) {
       column.forEach(function (cell) {
         if (cell) {
@@ -191,7 +201,7 @@ var Container = React.createClass({
     var _self = this;
     storageManager.getBestScore(function(bestScore){
         if (bestScore < _self.score) {
-          storageManager.setBestScore(_self.score);   
+          storageManager.setBestScore(_self.score);
           _self.setState({score: _self.score, best: _self.score, tiles: tiles, won: _self.won, over:_self.over});
         }
         else {
@@ -200,32 +210,32 @@ var Container = React.createClass({
     });
   },
   // Represent the current game as an object
-  serialize: function () {
+  serialize() {
     return {
       grid:        this.grid.serialize(),
       score:       this.score,
       over:        this.over,
       won:         this.won,
-      keepPlaying: this.keepPlaying
-    };
+      keepPlaying: this.keepPlaying,
+    }
   },
   // Save all tile positions and remove merger info
-  prepareTiles: function () {
+  prepareTiles() {
     this.grid.eachCell(function (x, y, tile) {
       if (tile) {
         tile.mergedFrom = null;
         tile.savePosition();
       }
-    });
+    })
   },
   // Move a tile and its representation
-  moveTile: function (tile, cell) {
-    this.grid.cells[tile.x][tile.y] = null;
-    this.grid.cells[cell.x][cell.y] = tile;
-    tile.updatePosition(cell);
+  moveTile(tile, cell) {
+    this.grid.cells[tile.x][tile.y] = null
+    this.grid.cells[cell.x][cell.y] = tile
+    tile.updatePosition(cell)
   },
   // Move tiles on the grid in the specified direction
-  move: function (direction) {
+  move(direction) {
     // 0: up, 1: right, 2: down, 3: left
     var self = this;
     if (this.isGameTerminated()) return; // Don't do anything if the game's over
@@ -271,7 +281,7 @@ var Container = React.createClass({
         }
       });
     });
-      
+
     if (moved) {
       this.addRandomTile();
       if (!this.movesAvailable()) {
@@ -281,19 +291,18 @@ var Container = React.createClass({
     }
   },
   // Get the vector representing the chosen direction
-  getVector: function (direction) {
+  getVector(direction) {
     // Vectors representing tile movement
-    var map = {
+    const map = {
       0: { x: 0,  y: -1 }, // Up
       1: { x: 1,  y: 0 },  // Right
       2: { x: 0,  y: 1 },  // Down
-      3: { x: -1, y: 0 }   // Left
-    };
-
-    return map[direction];
+      3: { x: -1, y: 0 },   // Left
+    }
+    return map[direction]
   },
   // Build a list of positions to traverse in the right order
-  buildTraversals: function (vector) {
+  buildTraversals(vector) {
     var traversals = { x: [], y: [] };
 
     for (var pos = 0; pos < this.props.size; pos++) {
@@ -307,7 +316,7 @@ var Container = React.createClass({
 
     return traversals;
   },
-  findFarthestPosition: function (cell, vector) {
+  findFarthestPosition(cell, vector) {
     var previous;
 
     // Progress towards the vector direction until an obstacle is found
@@ -322,11 +331,11 @@ var Container = React.createClass({
       next: cell // Used to check if a merge is required
     };
   },
-  movesAvailable: function () {
-    return this.grid.cellsAvailable() || this.tileMatchesAvailable();
+  movesAvailable() {
+    return this.grid.cellsAvailable() || this.tileMatchesAvailable()
   },
   // Check for available matches between tiles (more expensive check)
-  tileMatchesAvailable: function () {
+  tileMatchesAvailable() {
     var self = this;
 
     var tile;
@@ -350,20 +359,11 @@ var Container = React.createClass({
       }
     }
 
-    return false;
+    return false
   },
-  positionsEqual: function (first, second) {
-    return first.x === second.x && first.y === second.y;
-  }
-});
-        
-var styles = StyleSheet.create({
-    container:{
-        width: width,
-        height: height,
-        backgroundColor:"#faf8ef",
-        paddingHorizontal:20
-    }
-});
+  positionsEqual(first, second) {
+    return first.x === second.x && first.y === second.y
+  },
+})
 
-module.exports = Container;
+export default Container

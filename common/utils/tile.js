@@ -29,4 +29,4 @@ Tile.prototype.serialize = function () {
   };
 };
 
-module.exports = Tile;
+export default Tile
