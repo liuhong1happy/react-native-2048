@@ -1,6 +1,6 @@
 var _prog = 0;
 
-function Tile(position, value) {
+var Tile = function (position, value) {
   this.x                = position.x;
   this.y                = position.y;
   this.value            = value || 2;

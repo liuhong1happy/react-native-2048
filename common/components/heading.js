@@ -1,36 +1,23 @@
-/*
-一、Flex Box
-1.flexDirection:['row','column'],
-row:水平划分
-column:垂直划分
-2.alignItems:['flex-start', 'flex-end', 'center', 'stretch']
-水平布局
-3.justifyContent:['flex-start', 'flex-end', 'center', 'space-between', 'space-around']
-垂直布局
-*/
-
-import React from 'react-native'
-
-const {
+import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
-} = React
-
+}  from 'react-native'
+import React from 'react'
+	
+import Dimensions from '../utils/dimensions'
 const {height, width} = Dimensions.get('window')
-const isMinWin = width <= 320
 
 const styles = StyleSheet.create({
   heading:{
-    height:isMinWin?70:80,
-    marginTop:isMinWin?50:40,
+    height:Dimensions.size["20"],
+    marginTop:Dimensions.size["12"],
     flexDirection: 'row',
   },
   headingTitle:{
-    fontSize:isMinWin?36:48,
+    fontSize:Dimensions.size["12"],
     color: '#776E65',
-    fontWeight: 'bold',
+    fontWeight: 'bold'
   },
   scores:{
     flex:1,
@@ -41,12 +28,12 @@ const styles = StyleSheet.create({
   },
   container:{
     backgroundColor: '#bbada0',
-    paddingLeft:15,
-    paddingRight:15,
-    paddingTop:5,
-    paddingBottom:5,
-    borderRadius:3,
-    marginLeft:5,
+    paddingLeft:Dimensions.size["5"],
+    paddingRight:Dimensions.size["5"],
+    paddingTop:Dimensions.size["2"],
+    paddingBottom:Dimensions.size["2"],
+    borderRadius:Dimensions.size["2"],
+    marginLeft:Dimensions.size["2"],
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -54,12 +41,12 @@ const styles = StyleSheet.create({
     color: '#eee4da',
     textAlign: 'center',
     fontWeight: 'bold',
-    fontSize:isMinWin?9:12,
+    fontSize:Dimensions.size["3"]
   },
   containerValue:{
     color: '#fff',
     textAlign: 'center',
-    fontSize:isMinWin?18:24,
+    fontSize:Dimensions.size["6"],
     fontWeight: 'bold',
   },
 })

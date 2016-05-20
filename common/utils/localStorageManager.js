@@ -1,8 +1,6 @@
-import React from 'react-native'
-
-const {
+import {
   AsyncStorage,
-} = React
+} from 'react-native'
 
 var LocalStorageManager = function() {
   this.bestScoreKey = "bestScore"

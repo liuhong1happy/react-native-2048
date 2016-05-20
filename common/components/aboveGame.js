@@ -1,43 +1,43 @@
-import React from 'react-native'
-
-const {
+import {
   View,
   Text,
   StyleSheet,
   TouchableWithoutFeedback,
-  Dimensions,
-} = React
+} from 'react-native'
+import React from 'react'
+	
+import Dimensions from '../utils/dimensions'
 const {height, width} = Dimensions.get('window')
-const isMinWin = width <= 320
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    marginTop: 5,
-    marginBottom: isMinWin ? 15 : 0,
+    marginTop: Dimensions.size["5"],
+    marginBottom: Dimensions.size["5"],
   },
   textContainer: {
     flex: 1,
-    marginRight: 10,
+    marginRight: Dimensions.size["4"],
   },
   text:{
     color: '#776E65',
-    fontSize: isMinWin ? 12 : 16,
-    lineHeight: isMinWin ? 18 : 26,
+    fontSize: Dimensions.size["6"],
+    lineHeight: Dimensions.size["8"],
   },
   boldText:{
    fontWeight: 'bold',
   },
   newGameContainer:{
     backgroundColor: '#8f7a66',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 3,
+    paddingHorizontal: Dimensions.size["4"],
+    paddingVertical: Dimensions.size["4"],
+    borderRadius: Dimensions.size["2"],
   },
   newGame:{
     color: '#fff',
-    fontSize: isMinWin ? 14 : 18,
+    fontSize: Dimensions.size["6"],
+	lineHeight: Dimensions.size["8"]
   }
 })
 

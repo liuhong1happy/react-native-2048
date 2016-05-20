@@ -1,11 +1,12 @@
-import React from 'react-native'
-
-const {
+import {
   View,
   Text,
   Dimensions,
   TouchableWithoutFeedback,
-} = React
+} from 'react-native';
+import React,{ 
+	Component 
+} from 'react';
 
 const {height, width} = Dimensions.get('window')
 
@@ -65,7 +66,7 @@ const styles = {
   }
 }
 
-const GameMessage = React.createClass({
+class GameMessage extends Component{
   genMessage() {
     if(this.props.won){
         return (<View  style={styles.row}>
@@ -92,7 +93,8 @@ const GameMessage = React.createClass({
                 </View>)
     }
     return (<View></View>)
-  },
+  }
+				
   render() {
     const message = this.genMessage()
     const containerStyle = (this.props.won || this.props.over) ? {width:width-40,height:width-40} : {width:0,height:0}
@@ -100,6 +102,6 @@ const GameMessage = React.createClass({
       <View style={[styles.container,containerStyle]}>{message}</View>
     )
   }
-})
+}
 
 export default GameMessage

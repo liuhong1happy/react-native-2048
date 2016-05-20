@@ -1,39 +1,41 @@
-import React from 'react-native'
+import {
+  View
+}  from 'react-native'
+import React,{
+	Component
+} from 'react';
 
 import GameMessage from './gameMessage'
 import GridContainer from './gridContainer'
 import TileContainer from './tileContainer'
-
-const {
-  View,
-  Dimensions,
-} = React
-
+	
+import Dimensions from '../utils/dimensions'
 const {height, width} = Dimensions.get('window')
 
+	
 const styles = {
   container: {
-    width: width - 40,
-    height: width - 40,
+    width: width - Dimensions.size["10"],
+    height: width - Dimensions.size["10"],
     backgroundColor: '#bbada0',
-    borderRadius: 6,
-    marginTop: 25,
+    borderRadius: Dimensions.size["2"],
+    marginTop: Dimensions.size["12"],
   }
 }
 
 const GameContainer = (props) => {
-  return (
-    <View style={styles.container}>
-      <GridContainer />
-      <TileContainer tiles={props.tiles} />
-      <GameMessage
-        won={props.won}
-        over={props.over}
-        onKeepGoing={props.onKeepGoing}
-        onTryAagin={props.onTryAagin}
-      />
-    </View>
-  )
+	  return (
+		<View style={styles.container}>
+		  <GridContainer />
+		  <TileContainer tiles={props.tiles} />
+		  <GameMessage
+			won={props.won}
+			over={props.over}
+			onKeepGoing={props.onKeepGoing}
+			onTryAagin={props.onTryAagin}
+		  />
+		</View>
+	  )
 }
 
 export default GameContainer

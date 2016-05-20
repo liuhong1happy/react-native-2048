@@ -1,19 +1,16 @@
-import React from 'react-native'
-
-import Tile from './tile'
-
-const {
+import {
   View,
   Text,
-  Dimensions,
-} = React
-
+} from 'react-native'
+import React from 'react'
+import Tile from './tile'
+import Dimensions from '../utils/dimensions'
 const {height, width} = Dimensions.get('window')
 
 const styles = {
   container: {
-    width: width-40,
-    height: width-40,
+    width: width-Dimensions.size["10"],
+    height: width-Dimensions.size["10"],
     position: 'absolute',
     left: 0,
     top: 0,
