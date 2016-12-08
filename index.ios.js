@@ -1,4 +1,5 @@
-import React, {AppRegistry} from 'react-native'
+import  {AppRegistry} from 'react-native'
+import React from 'react'
 
 import Container from './common/components/container'
 
