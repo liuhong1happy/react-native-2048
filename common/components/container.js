@@ -3,9 +3,15 @@ import  {
   View,
   Text,
   PanResponder,
+  LayoutAnimation,
   Alert,
 }  from 'react-native'
 
+var NativeModules = require('NativeModules');
+var {
+  UIManager,
+} = NativeModules;
+	
 import React,{
 	Component
 } from 'react'
@@ -52,7 +58,10 @@ class Container extends Component{
       onPanResponderMove: (e, gestureState)=>_self._handlePanResponderMove(e, gestureState),
       onPanResponderRelease: (e, gestureState)=>_self._handlePanResponderEnd(e, gestureState)
     })
-    this.moving = false
+    this.moving = false;
+	// Animate creation
+    UIManager.setLayoutAnimationEnabledExperimental &&
+      UIManager.setLayoutAnimationEnabledExperimental(true);
   }
   _handleStartShouldSetPanResponder(e: Object, gestureState: Object): boolean {
     return true
@@ -147,6 +156,8 @@ class Container extends Component{
     }
     var _self =  this;
     storageManager.getBestScore(function(bestScore){
+		// Animate the update
+		LayoutAnimation.easeInEaseOut();
         _self.setState({score: _self.score, best: bestScore, tiles: _self.getRandomTiles(), over: _self.over, won: _self.won});
     })
   }
@@ -204,6 +215,8 @@ class Container extends Component{
     });
     var _self = this;
     storageManager.getBestScore(function(bestScore){
+		// Animate the update
+		LayoutAnimation.easeInEaseOut();
         if (bestScore < _self.score) {
           storageManager.setBestScore(_self.score);
           _self.setState({score: _self.score, best: _self.score, tiles: tiles, won: _self.won, over:_self.over});

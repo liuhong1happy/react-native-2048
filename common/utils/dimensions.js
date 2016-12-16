@@ -4,7 +4,7 @@ var {width,scale,height,fontScale} = Dimensions.get("window");
 var isIOS = Platform.OS == "ios";
 var statusBarHeight = isIOS? 20: StatusBar.currentHeight;
 fontScale = scale;
-if(scale>3) fontScale = 3;
+// if(scale>3) fontScale = 3;
 
 module.exports = {
 	get:Dimensions.get,
