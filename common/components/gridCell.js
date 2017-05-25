@@ -3,7 +3,7 @@ import {
   Text,
 }  from 'react-native';
 import React from 'react'
-	
+
 import Dimensions from '../utils/dimensions'
 const {height, width} = Dimensions.get('window')
 
@@ -20,8 +20,8 @@ const styles = {
   }
 }
 
-const GridRow = () => {
+const GridCell = () => {
   return <View style={styles.container} />
 }
 
-export default GridRow
+export default GridCell
